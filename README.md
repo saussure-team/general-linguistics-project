@@ -6,4 +6,4 @@ Repository for the ERC-ADG project "SGL: Beyond the Course. A Knowledge Site for
 ## ongoing mockup of the Digital Scholarly Web Platform
  * [mockup][mk]
  
- [mk] : 'http://licodemo.ilc.cnr.it:8080/Saussure_Wapp/'
+ [mk]: http://licodemo.ilc.cnr.it:8080/Saussure_Wapp/
