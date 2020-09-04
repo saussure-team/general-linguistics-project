@@ -7,5 +7,5 @@ Repository for the ERC-ADG project *"SGL: Beyond the Course. A Knowledge Site fo
  * [demo saussure EVT][evt]
  * [PRIN2008 platform][mk]
  
- [mk]  :  http://licodemo.ilc.cnr.it:8080/Saussure_Wapp/
- [evt] : http://licodemo.ilc.cnr.it/demo/demo-saussure-build
+ [mk]: http://licodemo.ilc.cnr.it:8080/Saussure_Wapp/
+ [evt]: http://licodemo.ilc.cnr.it/demo/demo-saussure-build
