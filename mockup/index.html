@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Merienda+One"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>
+      SGL: Beyond the Course. A Knowledge Site for Rethinking Saussure’s General
+      Linguistics
+    </title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body style="background-color: rgb(200, 200, 200);">
+    <div id="mockup"><span>mockup</span></div>
+    <div
+      id="container"
+      style="
+        position: absolute;
+        width: 99%;
+        height: 99%;
+        background-color: whitesmoke;
+      "
+    >
+      <div
+        id="nav"
+        style="
+          min-height: 50px;
+          margin: 2px;
+          background-color: rgba(255, 255, 255, 1);
+          height: 5%;
+        "
+      >
+        <header>
+          <span class="main">Daniele Gambarara: SGL</span>
+          <br />
+          <span class="subtitle"
+            >Beyond the Course. A Knowledge Site for Rethinking Saussure’s
+            General Linguistics
+          </span>
+          <nav class="intestazione">
+            <ol>
+              <li><a href="#">home</a></li>
+              <li><a href="about.html">about</a></li>
+              <li><a href="about.html">corpora</a></li>
+              <li><a href="about.html">indexes</a></li>
+              <li><a href="about.html">views</a></li>
+            </ol>
+          </nav>
+
+          <div id="user-role">
+            <span>hi, your actual role is</span>
+            <select name="user-role" id="role">
+              <option value="reader" selected>READER</option>
+              <option value="scholar">SCHOLAR</option>
+            </select>
+          </div>
+        </header>
+      </div>
+      <div id="main" style="height: 85%;">
+        <div
+          id="infobox"
+          style="
+            display: none;
+            text-align: right;
+            position: absolute;
+            background-color: rgba(194, 197, 144, 0.8);
+            min-width: 100px;
+            max-width: 250px;
+            width: 15%;
+            height: 35%;
+            z-index: 999;
+            top: 20%;
+            left: 80%;
+          "
+        >
+          <span id="close-btn" style="text-align: right; cursor: pointer;"
+            >[x]</span
+          >
+          <div class="infobox-content">
+            <header style="text-align: left;">INFOBOX</header>
+            <span></span>
+          </div>
+        </div>
+        <div
+          id="side-bar"
+          style="
+            float: left;
+            margin: 1px;
+            min-width: 150px;
+            width: 20%;
+            height: 100%;
+            background-color: white;
+            overflow: hidden;
+          "
+        >
+          <header
+            style="
+              margin-top: 5px;
+              padding-top: 5px;
+              text-align: center;
+              font-size: larger;
+              background-color: whitesmoke;
+            "
+          >
+            SEARCH IN:
+          </header>
+          <ul id="fonti-lista" style="list-style-type: none;">
+            <li>
+              <input
+                type="checkbox"
+                name="check-attempts"
+                id="check-attempts"
+              />
+              <a style="text-decoration: none;" href="#tab1">
+                <div>
+                  Attempts to write a book (1891-1902)
+                </div>
+              </a>
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                name="check-lectures"
+                id="check-lectures"
+              /><a style="text-decoration: none;" href="#tab3"
+                >Lectures (1906-1911)</a
+              >
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                name="check-clg"
+                id="check-clg"
+                checked
+              /><a style="text-decoration: none;" href="#tab4">CGL (1916)</a>
+            </li>
+            <li
+              style="margin-top: 10px; border: none; list-style-type: none;"
+            ></li>
+            <!--
+						<li>
+              <input type="checkbox" /><a
+                style="text-decoration: none;"
+                href="#tab5"
+                >FONTE 5</a
+              >
+            </li>
+            <li>
+              <input type="checkbox" /><a
+                style="text-decoration: none;"
+                href="#tab6"
+                >FONTE 6</a
+              >
+            </li>
+            <li>
+              <input type="checkbox" /><a
+                style="text-decoration: none;"
+                href="#tab7"
+                >FONTE 7</a
+              >
+            </li>
+            <li
+              style="margin-top: 5px; border: none; list-style-type: none;"
+            ></li>
+            <li>
+              <input type="checkbox" /><a
+                style="text-decoration: none;"
+                href="#tab8"
+                >FONTE 8</a
+              >
+						</li>
+						-->
+          </ul>
+          <header
+            style="
+              margin-top: 5px;
+              padding-top: 5px;
+              text-align: center;
+              font-size: larger;
+              background-color: whitesmoke;
+            "
+          >
+            FILTERS:
+          </header>
+          <div id="text-date" class="accordion">
+            <button id="abutt" class="accordion-trigger">
+              <span class="accordion-title"
+                >IMPORTANT DATES
+                <span
+                  id="acc-icon"
+                  class="accordion-icon"
+                  data-open="close"
+                ></span
+              ></span>
+            </button>
+            <div id="dates" style="display: none;">
+              <ul>
+                <li><a href="#">1857</a></li>
+                <li><a href="#">1891</a></li>
+                <li><a href="#">1916</a></li>
+              </ul>
+            </div>
+          </div>
+          <ul style="list-style-type: none;">
+            <li>
+              <a style="text-decoration: none;" href="#tab1"
+                >DATE (not before of)</a
+              ><br /><input type="date" />
+            </li>
+            <li>
+              <a style="text-decoration: none;" href="#tab1"
+                >DATE (not after of)</a
+              ><br /><input type="date" />
+            </li>
+            <li>
+              <a style="text-decoration: none;" href="#tab2">Occurrencies (%)</a
+              ><br /><input type="range" />
+            </li>
+            <li>
+              <a style="text-decoration: none;" href="#tab2">Themes</a><br />
+              <input list="temi" id="temi-filtro" name="tema" value="theme" />
+              <datalist id="temi">
+                <option value="theme1"> </option>
+                <option value="theme2"> </option>
+                <option value="theme3"> </option>
+                <option value="theme4"> </option>
+                <option value="theme5"> </option>
+                <option value="theme6"> </option>
+              </datalist>
+            </li>
+          </ul>
+        </div>
+        <div
+          id="app"
+          style="
+            float: left;
+            margin-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            width: 79%;
+            height: 99%;
+            background-color: rgba(194, 194, 194, 0.4);
+          "
+        >
+          <div style="text-align: center;">
+            <h1 class="htitle">Explore Saussure Thoughts</h1>
+          </div>
+          <div class="err-msg" id="error">
+            <div
+              id="error-close"
+              style="float: left; font-size: x-small; cursor: pointer;"
+            >
+              [x]
+            </div>
+            <div id="warning-msg">
+              The selected feature is under development
+            </div>
+          </div>
+          <div class="alert-msg" id="message">
+            <div
+              id="msg-close"
+              style="float: left; font-size: x-small; cursor: pointer;"
+            >
+              [x]
+            </div>
+            <div id="attention-msg" style="margin-left: 25%;">
+              You can search for <b>échec</b> as lemma within the corpus
+            </div>
+          </div>
+          <div style="margin-top: 5%; width: 100%; text-align: center;">
+            <label for="search">search type:</label>
+            <select name="search-type" id="search">
+              <option>key-word</option>
+              <option selected="selected">lemma</option>
+              <option>similarity</option>
+              <option>thematic</option>
+              <option>semantic</option>
+              <option>query DSL</option>
+            </select>
+            <input type="text" value="échec" /><input
+              id="search-btn"
+              type="button"
+              value="search"
+            />
+          </div>
+          <div id="timeline">
+            <img
+              src="imgs/timeline-saussure.png"
+              style="width: 95%; padding-left: 2%; padding-top: 7%;"
+            />
+          </div>
+          <div
+            id="search-result"
+            style="margin-top: 20px; width: 95%; height: 65%; overflow-y: auto;"
+          ></div>
+        </div>
+      </div>
+      <div
+        id="footer"
+        style="margin: 2px; background-color: white; height: 9%;"
+      >
+        <footer style="text-align: center;">
+          <div style="padding-top: 10px;">
+            <span style="margin-left: 1%;"> ERC-2020- ADV Grant </span>
+            <span style="margin-left: 50%;"> SGL project</span>
+          </div>
+          <div style="margin-top: 5px;">
+            <span>
+              © 2020 Beyond the Course. A Knowledge Site for Rethinking
+              Saussure’s General Linguistics
+            </span>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="src/app.js"></script>
+    <script>
+      var test = function () {
+        var c_clg = document.getElementById("check-clg");
+        var c_lectures = document.getElementById("check-lectures");
+        var c_attempts = document.getElementById("check-attempts");
+        var clg_checked = c_clg.checked;
+        var lectures_checked = c_lectures.checked;
+        var attempts_checked = c_attempts.checked;
+        console.log("check-clg", clg_checked);
+        console.log("check-lectures", lectures_checked);
+        console.log("check-attempts", attempts_checked);
+        var mask = 1000;
+        /*if (!clg_checked || lectures_checked || attempts_checked) {
+          warning();
+          c_clg.checked = true;
+        }*/
+        if (clg_checked) {
+          console.log("in lecture_checked");
+          mask += 1;
+        }
+        if (lectures_checked) {
+          console.log("in lecture_checked");
+          mask += 10;
+        }
+        if (attempts_checked) {
+          console.log("in attempts_checked");
+          mask += 100;
+        }
+        app.run(mask);
+      };
+      var showinfobox = (n) => {
+        console.log("in html show info box", n);
+        app.showinfobox(n);
+      };
+      var closeinfobox = () => {
+        var infobox = document.getElementById("infobox");
+        infobox.style.display = "none";
+      };
+
+      var reset = () => {
+        var result = document.getElementById("search-result");
+        var timeline = document.getElementById("timeline");
+        result.innerHTML = ``;
+        timeline.style.display = "block";
+      };
+
+      var accordition = () => {
+        var acc = document.getElementById("dates");
+        var accIcon = document.getElementById("acc-icon");
+        acc.style.display == "none"
+          ? (acc.style.display = "block")
+          : (acc.style.display = "none");
+        accIcon.dataset.open == "close"
+          ? (accIcon.dataset.open = "open")
+          : (accIcon.dataset.open = "close");
+      };
+
+      var log = () => {
+        console.log("log");
+      };
+
+      var close = (e) => {
+        console.log("close", e.target.parentNode);
+        e.target.parentNode.style.display = "none";
+      };
+      var warning = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The selected feature is under development`;
+      };
+      var warning_role = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
+      };
+
+      window.addEventListener("load", (event) => {
+        document.getElementById("search-btn").addEventListener("click", test); // function(){console.log("search-btn")}
+        console.log("ok!");
+        document
+          .getElementById("close-btn")
+          .addEventListener("click", closeinfobox);
+        document.getElementById("abutt").addEventListener("click", accordition);
+        document.getElementById("error-close").addEventListener("click", close);
+        document.getElementById("msg-close").addEventListener("click", close);
+        //var app = new APPsaussure();
+        //app.run();
+        document
+          .getElementById("role")
+          .addEventListener("change", warning_role);
+      });
+    </script>
+  </body>
+</html>

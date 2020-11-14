@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Merienda+One"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>
+      TESTI - SGL: Beyond the Course. A Knowledge Site for Rethinking Saussure’s
+      General Linguistics
+    </title>
+    <meta charset="UTF-8" />
+    <script id="appjs" type="text/javascript" src="src/app.js"></script>
+  </head>
+
+  <body style="background-color: rgb(200, 200, 200);">
+    <div id="mockup"><span>mockup</span></div>
+    <div
+      id="main-div"
+      style="
+        position: absolute;
+        width: 99%;
+        height: 99%;
+        background-color: rgb(184, 206, 202);
+      "
+    >
+      <div
+        id="nav"
+        style="
+          min-height: 50px;
+          margin: 2px;
+          background-color: rgba(255, 255, 255, 1);
+          height: 5%;
+        "
+      >
+        <header>
+          <span class="main">Daniele Gambarara: SGL</span>
+          <br />
+          <span class="subtitle"
+            >Beyond the Course. A Knowledge Site for Rethinking Saussure’s
+            General Linguistics
+          </span>
+
+          <nav class="intestazione">
+            <ol>
+              <li><a href="index.html">home</a></li>
+              <li><a href="about.html">about</a></li>
+              <li><a href="about.html">corpora</a></li>
+              <li><a href="about.html">indexes</a></li>
+              <li><a href="about.html">views</a></li>
+            </ol>
+          </nav>
+
+          <div id="user-role">
+            <span>hi, your actual role is</span>
+            <select name="user-role" id="role">
+              <option>READER</option>
+              <option>SCHOLAR</option>
+            </select>
+          </div>
+        </header>
+      </div>
+      <div id="main" style="height: 85%;">
+        <div id="infobox">
+          <span id="close-btn" style="text-align: right; cursor: pointer;"
+            >[x]</span
+          >
+          <div class="infobox-content">
+            <header style="text-align: left;"></header>
+            <span></span>
+          </div>
+        </div>
+        <div
+          id="side-bar"
+          style="
+            overflow-x: auto;
+            float: left;
+            margin: 1px;
+            min-width: 150px;
+            width: 20%;
+            height: 100%;
+            background-color: white;
+          "
+        >
+          <header
+            style="margin-top: 5px; text-align: center; font-size: larger;"
+          >
+            Critical References on <b>échec[s]</b>
+          </header>
+          <ol class="references">
+            <li>
+              Mazzeo Marco, 2020, The chess analogy. Wittgenstein and Saussure
+              compared, in CFS 71: 61-78
+            </li>
+            <li>
+              MEJÌA, Claudia (1998), «L’image du jeu d’échecs chez Ferdinand de
+              Saussure ou le bouclier de Persée», in J. Bechtold (ed.),
+              Échiquiers d’encre: le jeu d’échecs et les Lettres (XIXe-XXe),
+              Genève, Droz, pp. 75-103.
+            </li>
+            <li>
+              NORMAND, Claudine (1995), «Le Cours de Linguistique générale,
+              métaphores et métalangage», Langages 29 (120), pp. 78-90.
+            </li>
+            <li>
+              SWIGGERS, Pierre (2014), «La langue mise en échec(s)», Recherches
+              sémiotiques/Semiotic inquiry 34, pp. 59–74.
+            </li>
+          </ol>
+          <hr />
+          <header
+            style="margin-top: 5px; text-align: center; font-size: larger;"
+          >
+            Other info on <b>échec[s]</b>
+          </header>
+          <ol class="other-info">
+            <li>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </li>
+            <li>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </li>
+          </ol>
+        </div>
+        <div
+          id="app"
+          style="
+            overflow: auto;
+            float: left;
+            margin-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            width: 79%;
+            height: 99%;
+            background-color: rgba(194, 194, 194, 0.76);
+          "
+        >
+          <div style="text-align: center;">
+            <h1>Saussure Texts</h1>
+          </div>
+
+          <div class="err-msg" id="error">
+            <div
+              id="error-close"
+              style="float: left; font-size: x-small; cursor: pointer;"
+            >
+              [x]
+            </div>
+            <div id="warning-msg">
+              The selected feature is under development
+            </div>
+          </div>
+
+          <div
+            id="text-result"
+            style="margin-top: 20px; width: 95%; position: relative;"
+          >
+            <div class="language" id="choose-language">
+              <input type="radio" name="lang" id="lang-fr" value="fr" checked />
+              <label for="lang-fr">French</label>
+              <input type="radio" name="lang" id="lang-en" value="en" />
+              <label for="lang-en">English</label>
+            </div>
+            <div
+              class="text-item"
+              id="t-rif"
+              style="text-align: center; width: 30%; font-weight: bold;"
+            >
+              <!--CLG pages 153-154 = CLG/E 1803-1816-->
+            </div>
+
+            <div class="text-item" id="t-item1"></div>
+
+            <div class="text-item" id="t-item2"></div>
+            <div class="text-item" id="t-item3"></div>
+            <div class="text-item" id="t-item4"></div>
+            <input
+              id="rall"
+              type="button"
+              onclick="readall()"
+              value="read all"
+              style="margin-left: 10px;"
+            />
+            <input
+              id="simtext"
+              type="button"
+              onclick="simtext()"
+              value="show similar texts"
+              style="margin-left: 20px;"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        id="footer"
+        style="margin: 2px; background-color: white; height: 9%;"
+      >
+        <footer style="text-align: center;">
+          <div style="padding-top: 10px;">
+            <span style="margin-left: 1%;"> ERC-2020- ADV Grant </span>
+            <span style="margin-left: 50%;"> SGL project</span>
+          </div>
+          <div style="margin-top: 5px;">
+            <span>
+              © 2020 Beyond the Course. A Knowledge Site for Rethinking
+              Saussure’s General Linguistics
+            </span>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      var param = "";
+      var readall = () => {
+        var lang = document.querySelector("#lang-fr").checked ? "fr" : "en";
+        var t_item1 = document.getElementById("t-item1");
+        var t_item2 = document.getElementById("t-item2");
+        var t_item3 = document.getElementById("t-item3");
+        var t_item4 = document.getElementById("t-item4");
+        var rall = document.getElementById("rall");
+
+        if (app.texts[param][1]) {
+          t_item2.style.display = "block";
+          t_item3.style.display = "block";
+          t_item4.style.display = "block";
+          if (lang == "fr") {
+            t_item2.innerHTML = app.texts[param][1].p;
+            t_item3.innerHTML = app.texts[param][2].p;
+            t_item4.innerHTML = app.texts[param][3].p;
+          } else if (lang == "en") {
+            t_item2.innerHTML = app.texts[param][1].e;
+            t_item3.innerHTML = app.texts[param][2].e;
+            t_item4.innerHTML = app.texts[param][3].e;
+          }
+        }
+        rall.style.visibility = "hidden";
+      };
+
+      var filltext = (e) => {
+        var lang = document.querySelector("#lang-fr").checked ? "fr" : "en";
+        var params = new URLSearchParams(document.location.search);
+        console.log("lang", lang);
+        console.log("param", params.get("rif"));
+        param = params.get("rif");
+        var rif = document.getElementById("t-rif");
+        var t_item = document.getElementById("t-item1");
+        if (lang == "fr") {
+          rif.innerHTML = app.texts[param][0].rif;
+          t_item.innerHTML = app.texts[param][0].p;
+        } else if (lang == "en") {
+          rif.innerHTML = app.texts[param][0].re;
+          t_item.innerHTML = app.texts[param][0].e;
+        }
+        //t_item.addEventListener("click", showinfobox);
+        var terms = document.querySelectorAll(".term");
+        console.log("terms", terms);
+        terms.forEach((t) => {
+          console.log("term", t);
+          t.addEventListener("click", () => showinfobox(t.textContent));
+        });
+      };
+      var test = function () {
+        console.log("internal test");
+        var t = app.test;
+        console.log(t, app);
+      };
+      var showinfobox = (n) => {
+        console.log("in html show info box", n);
+        app.showinfobox(n);
+      };
+      var closeinfobox = () => {
+        var infobox = document.getElementById("infobox");
+        infobox.style.display = "none";
+      };
+
+      var reset = () => {
+        var result = document.getElementById("text-result");
+        result.innerHTML = `TESTO`;
+      };
+
+      var warning = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The selected feature is under development`;
+      };
+
+      var warning_role = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
+        var params = new URLSearchParams(document.location.search);
+        console.log("param", params.get("rif"));
+        param = params.get("rif");
+        if (param == "f16v") {
+          window.location.href = "https://hp028.csb.app/scholar.html";
+        }
+      };
+
+      var close = (e) => {
+        console.log("close", e.target.parentNode);
+        e.target.parentNode.style.display = "none";
+      };
+
+      var changeLang = (e) => {
+        var read = document.getElementById("rall").style.visibility;
+        filltext();
+        read === "hidden" ? readall() : filltext();
+      };
+
+      var simtext = (e) => {
+        warning(e);
+      };
+
+      window.addEventListener("load", (event) => {
+        document.getElementById("t-rif").innerHTML = "";
+        document.getElementById("t-item1").innerHTML = "";
+        document.getElementById("t-item2").style.display = "none";
+        document.getElementById("t-item3").style.display = "none";
+        document.getElementById("t-item4").style.display = "none";
+
+        document
+          .getElementById("close-btn")
+          .addEventListener("click", closeinfobox);
+        document
+          .getElementById("role")
+          .addEventListener("change", warning_role);
+        document.getElementById("error-close").addEventListener("click", close);
+        document
+          .getElementById("lang-fr")
+          .addEventListener("change", changeLang);
+        document
+          .getElementById("lang-en")
+          .addEventListener("change", changeLang);
+
+        setTimeout(filltext, 1000);
+
+        //var app = new APPsaussure();
+        //app.run();
+      });
+    </script>
+  </body>
+</html>

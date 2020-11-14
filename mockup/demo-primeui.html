@@ -1,0 +1,589 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>PM Consultant | PHP PrimeUI demo</title>
+		<link rel="shortcut icon" href="http://www.pm-consultant.fr/sites/default/files/favicon_2.ico" type="image/vnd.microsoft.icon">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link rel="stylesheet" href="resources/jquery-ui-1.10.3/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="resources/primeui-1.0/themes/redmond/theme.css">
+		<link rel="stylesheet" href="resources/primeui-1.0/production/primeui-1.0-min.css">
+		<link rel="stylesheet" type="text/css" href="css/demopui.css">
+		<link type="text/css" rel="stylesheet" href="css/syntaxhighlighter/shcoredefault.css"/>
+		<style>.syntaxhighlighter{height:193px;}</style>
+		<script type="text/javascript" src="resources/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="resources/jquery-ui-1.10.3/ui/jquery-ui.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/datatable/datatable.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/core/core.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/paginator/paginator.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/growl/growl.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/producation/js/menu/menu.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/button/button.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/dialog/dialog.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/tabview/tabview.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/inputtext/inputtext.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/inputtextarea/inputtextarea.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/tooltip/tooltip.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/panel/panel.js"></script>
+		<script type="text/javascript" src="resources/primeui-1.0/production/js/dropdown/dropdown.js"></script>
+		<script type="text/javascript" src="js/pmc/override/primeui-1.0/datatable.js"></script>
+		<script type="text/javascript" src="js/pmc/override/primeui-1.0/dialog.js"></script>
+		<script type="text/javascript" src="js/pmc/override/primeui-1.0/paginator.js"></script>
+		<script type="text/javascript" src="js/blockui.js"></script>
+		<script type="text/javascript" src="resources/syntaxhighlighter/shcore.js"></script>
+		<script type="text/javascript" src="resources/syntaxhighlighter/shbrushphp.js"></script>
+		<script type="text/javascript">SyntaxHighlighter.all();</script>
+		<script type="text/javascript">
+			$(function() {
+				/********* Message initialisation **********/
+				$('#messages').puigrowl({life:3000});
+					
+				/********* Datatable definition **********/
+				var rows_per_page = 7;
+				$('#datatable').puidatatable({
+					lazy: true,
+					caption: 'Products',
+					paginator: {
+						rows: rows_per_page,
+						totalRecords : 0,
+						pageLinks : 10
+					},
+					selectionMode: 'single',
+					columns: [
+						{field:'product_name', headerText: 'Product name', sortable:true},
+						{field:'part_number', headerText: 'Part number', sortable:true},
+						{field:'product_description', headerText: 'Description', sortable:true},
+						{field:'product_price', headerText: 'Price', sortable:true}
+					],
+					datasource: function(callback, ui) {
+						var uri = 'services/get_data.php?first=' + ui.first + '&rows=' + rows_per_page;
+						if (ui.sortField) {uri += '&sortfield=' + ui.sortField + '&sortorder=' + ui.sortOrder;}
+						if (ui.filterCriteria) {uri += '&' + ui.filterCriteria;}
+						$.ajax({
+							type: "GET",
+							url: uri,
+							dataType: "json",
+							context: this,
+							beforeSend: function(){
+								$('#loading').show();
+								$('#left_tab_view').block({ message: null, overlayCSS:  {backgroundColor: '#000', opacity: 0} });
+							},
+							complete: function(){
+								$('#loading').hide();
+								$('#left_tab_view').unblock();
+							},
+							success: function(response) {
+								if (response.success === true) {
+									$('#datatable').puidatatable('setPaginator', 'totalRecords', parseInt(response.total));
+									callback.call(this, response.rows);
+									$('#datatable caption').text(response.total + ' Products');
+								} else {
+									$('#messages').puigrowl('show', [{severity:'error', summary: 'Load products...', detail: response.msg}]);
+								}
+							},
+							error: function(response) {
+								$('#messages').puigrowl('show', [{severity:'error', summary: 'Load products...', detail: 'Oops, the datatable content can\'t be load.'}]);
+							}
+						});  
+					},
+				});
+				/********* Action buttons definition **********/
+				$('#bt_new').puibutton({  
+					icon: 'ui-icon-circle-plus'  
+				}).focus().click(function() {
+					$("#product_form")[0].reset();
+					$("input[name='product_id']").val(-1); // -1 means in the php script that the product must be added
+					$('#edit_dialog_label').text('New product');
+					$('#edit_dialog').puidialog('show');
+				});
+				
+				$('#bt_edit').puibutton({  
+					icon: 'ui-icon-pencil'  
+				}).click(function() {
+					var selections = $('#datatable').puidatatable('getSelection');
+					if (selections.length === 1) {
+						if (selections[0]) {
+							$("input[name='product_id']").val(selections[0].product_id);
+							$("input[name='part_number']").val(selections[0].part_number);
+							$("input[name='product_name']").val(selections[0].product_name);
+							$("textarea[name='product_description']").val(selections[0].product_description);
+							$("input[name='product_price']").val(selections[0].product_price);
+							$('#edit_dialog_label').text("Edit product P/N " + selections[0].part_number );
+							$('#edit_dialog').puidialog('show');
+						}
+					} else {
+						$('#messages').puigrowl('show', [{severity:'warn', summary: 'Edit product', detail: 'Please, select a product first!'}]);
+					}
+				}); 
+				$('#bt_remove').puibutton({  
+					icon: 'ui-icon-circle-minus'  
+				}).click(function() {
+					var selections = $('#datatable').puidatatable('getSelection');
+					if (selections.length === 1) {
+						$('#remove_dialog').puidialog('show');
+						$('#remove_dialog #bt_remove_no').focus();
+					} 
+					else {
+						$('#messages').puigrowl('show', [{severity:'warn', summary: 'Remove product', detail: 'Please, select a product first!'}]);
+					}
+				});
+				
+				/********* Input fields definition **********/
+				$('input').puiinputtext();
+				$('textarea').puiinputtextarea(); 
+				
+				/********* Tab view definition **********/
+				$('#cb_rows').puidropdown().puidropdown('selectValue', 7);
+				$('#left_tab_view').puitabview({  
+					orientation: 'left',
+					effect: {name: 'fade',duration: 'normal'} 					
+				});
+				$('#php_tabview').puitabview();
+				
+				/********* Settings Tab view definition **********/
+				$('div.tab_panel').puipanel();
+				$('#bt_reset_data').puibutton({  
+					icon: 'ui-icon-arrowreturnthick-1-w',
+					iconPos: 'right'
+				}).click(function() {
+					$.ajax({
+						type: "POST",
+						url: "services/reset_data.php",
+						dataType: "json",
+						context: this,
+						success: function(response) {
+							$('#datatable').puidatatable('setPaginator', 'page', 0);
+							$('#datatable').puidatatable('refresh');
+							$('#left_tab_view').puitabview('select', 0);
+							$('#messages').puigrowl('show', [{severity:'info', summary: 'Reset data', detail: response.msg}]);
+						},
+						error: function(response) {
+							$('#messages').puigrowl('show', [{severity:'error', summary: 'Reset data', detail: 'Oups! Unable to reset data.'}]);
+						}
+					});
+				});
+				$('#bt_apply_nbrows').puibutton({  
+					icon: 'ui-icon-check',
+					iconPos: 'right'
+				}).click(function() {
+					rows_per_page = parseInt($('#cb_rows').puidropdown('getSelectedValue'));
+					$('#datatable').puidatatable('setPaginator', 'rows', rows_per_page);
+					$('#datatable').puidatatable('refresh');
+					$('#left_tab_view').puitabview('select', 0);
+				});
+				
+				/********* Search form definition **********/
+				$('#bt_search').puibutton({
+					icon: 'ui-icon-search'  
+				});
+				
+				$('#bt_search_reset').puibutton({  
+					icon: 'ui-icon-circle-close'
+				}).hide();
+				
+				$('input[name="search_criteria"]').val('');
+				
+				$('#search_form').submit(function(event) {
+					var filterValue = $('input[name="search_criteria"]').val(),
+						serializedFilter = 'search_criteria='+filterValue;
+					if (filterValue === '') {
+						$('#messages').puigrowl('show', [{severity:'warn', summary: 'Search', detail: 'Please, type in a criteria first.'}]);
+					} else {
+						$('#datatable').puidatatable('filterRows',serializedFilter);
+						$('#bt_search_reset').show();
+					}
+					event.preventDefault();
+				});
+				
+				$('#search_form').bind("reset", function() {
+					$('input[name="search_criteria"]').val('');
+					$('#bt_search_reset').hide();
+					$('#datatable').puidatatable('filterRows',null);
+				});
+				
+				/********* Product Edit Dialog **********/
+				$('#edit_dialog').puidialog({
+					resizable: false,
+					showEffect: 'fade',  
+					hideEffect: 'fade',  
+					minimizable: false,
+					maximizable: false,
+					modal: true,
+					width:350
+				});
+				/* SAVE BUTTON ACTION */
+				$('#edit_dialog #bt_save').puibutton({ // Fire the submit event of the dialog form 
+					icon: 'ui-icon-disk'
+				});
+				$('#product_form').submit(function(event) {
+					var result = $("#product_form")[0].checkValidity();
+					if(result) {
+						var product = $('#product_form').serializeArray();
+						$.ajax({
+							type: "POST",
+							url: "services/save_data.php",
+							data: product,
+							dataType: "json",
+							context: this,
+							success: function(response) {
+								if (response.success) {
+									$('#messages').puigrowl('show', [{severity:'info', summary: 'Save product', detail: response.msg}]);
+									$('#edit_dialog').puidialog('hide');
+									if (response.action === 'new') {
+										$('#datatable').puidatatable('refresh',+1);
+									} else {
+										$('#datatable').puidatatable('paginate');
+									}
+								} else {
+									$('#messages').puigrowl('show', [{severity:'error', summary: 'Save product', detail: response.msg}]);
+								}
+							},
+							error: function(response) {
+								$('#messages').puigrowl('show', [{severity:'error', summary: 'Save product', detail: 'Oups! Unable to save data.'}]);
+							}
+						});
+					}
+					event.preventDefault();
+				});
+				/* CANCEL BUTTON ACTION */
+				$('#edit_dialog #bt_cancel').puibutton({
+					icon: 'ui-icon-close'
+				}).click(function() {
+						$('#edit_dialog').puidialog('hide');
+				});
+				
+				/********* Remove item Dialog **********/
+				$('#remove_dialog').puidialog({
+					resizable: false,
+					showEffect: 'fade',  
+					hideEffect: 'fade',  
+					minimizable: false,
+					maximizable: false,
+					modal: true,
+					width:335
+				});
+				/* YES BUTTON ACTION */
+				$('#remove_dialog #bt_remove_yes').puibutton({
+					icon: 'ui-icon-check'
+				}).click(function() {
+					var selections = $('#datatable').puidatatable('getSelection');
+					var product = new Object();
+					product.product_id = selections[0].product_id;
+					$.ajax({
+						type: "POST",
+						url: 'services/remove_data.php',
+						data: product,
+						dataType: "json",
+						context: this,
+						success: function(response) {
+							if (response.success) {
+								$('#datatable').puidatatable('refresh',-1);
+								$('#messages').puigrowl('show', [{severity:'info', summary: 'Remove product', detail: response.msg}]);
+								$('#remove_dialog').puidialog('hide');
+							} else {
+								$('#messages').puigrowl('show', [{severity:'error', summary: 'Remove product', detail: response.msg}]);
+							}
+						},
+						error: function(response) {
+							$('#messages').puigrowl('show', [{severity:'error', summary: 'Remove product', detail: 'Oups! Unable to remove the selected product.'}]);
+						}
+					});
+				});
+				/* NO BUTTON ACTION */
+				$('#remove_dialog #bt_remove_no').puibutton({
+					icon: 'ui-icon-close'
+				}).click(function() {
+					$('#remove_dialog').puidialog('hide');  
+				});
+			});
+		</script>
+		<!-- Google analytics tracking -->
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-1462536-2']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</head>
+	<body>
+		<div id="messages"></div>
+		<div id="banner">
+			<a href="http://www.pm-consultant.fr/"><img id="banner_logo" src="img/logo-pmc.png" alt="banner logo" /></a>
+			<div id="banner_text_wrapper">
+				<div id="banner_title">PHP PrimeUI demo</div>
+				<div id="banner_subtitle">CRUD application based on PrimeUI components</div>
+			</div>
+			<a href="http://www.primefaces.org/primeui/" target="_blank"><img id="primeui_logo" src="img/logo_primeui.png" alt="primeui logo" /></a>
+		</div>
+		<div id="main_menu"></div>
+		<div id="wrapper">
+			<div id="content">
+				<p>This <strong><abbr title="Create Read Update Delete">CRUD</abbr> application</strong> is an illustration of a set of <a href="http://www.primefaces.org/primeui/" target="_blank">PrimeUI</a> components, released in <strong>version 1.0</strong> in October 2013, 
+				like the <a href="http://www.primefaces.org/primeui/datatable.html" target="_blank">puidatatable</a>, <a href="http://www.primefaces.org/primeui/paginator.html" target="_blank">puipaginator</a>,
+				<a href="http://www.primefaces.org/primeui/dialog.html" target="_blank">puidialog</a>, <a href="http://www.primefaces.org/primeui/dropdown.html" target="_blank">puidropdown</a>,
+				<a href="http://www.primefaces.org/primeui/tabview.html" target="_blank">puitabview</a>, <a href="http://www.primefaces.org/primeui/panel.html" target="_blank">puipanel</a>
+				or the <a href="http://www.primefaces.org/primeui/button.html" target="_blank">puibutton</a> component.</p>
+				<p>It allows you for test purpose, to <strong>add</strong>, <strong>edit</strong>, <strong>remove</strong> and <strong>search</strong> products without page reload.<br>
+				From the <q>Settings</q> pane, you can <strong>reset</strong> the datatable content and modify the number of <strong>rows per page</strong>.</p>
+				<div id="left_tab_view">  
+					<ul>  
+						<li><a href="#tab1">Demonstration</a></li>  
+						<li><a href="#tab2">Settings</a></li>
+						<li style="margin-top:5px;border:none;"></li>
+						<li><a href="#tab3">INFOS: datatable load</a></li>
+						<li><a href="#tab4">INFOS: column sort</a></li>
+						<li><a href="#tab5">INFOS: the paginator</a></li>
+						<li><a href="#tab6">INFOS: form validation</a></li>
+						<li><a href="#tab7">INFOS: search feature</a></li>
+						<li style="margin-top:5px;border:none;"></li>
+						<li><a href="#tab8">PHP source code</a></li>
+					</ul>  
+					<div>  
+						<div id="tab1">
+							<img id="loading" src="img/loading.gif"/>
+							<div id="datatable">
+							</div>
+							<div id='action_buttons'>
+								<button id="bt_new" type="button" title="Add a new product...">New</button>
+								<button id="bt_edit" type="button" title="Edit the selected product...">Edit</button>
+								<button id="bt_remove" type="button" title="Remove the selected product...">Remove</button>
+							</div>
+							<!-- Search form -->
+							<form id='search_form'>
+								<input name="search_criteria" type="text" placeholder="search criteria..."/>
+								<button id="bt_search_reset" type="reset" title="Reset the search field content..."></button>
+								<button id="bt_search" type="submit" title="Search the products that correspond to the criteria..."></button>
+							</form>
+						</div>  
+						<div id="tab2">
+							<div class='tab_panel' style="height:auto;" title="Reinitialize the datatable content">
+								<p>If you made changes to the data table rows by adding, editing, removing products, its content can be reinitialized from the original data rows by clicking the <q>Reset</q> button below.</p>
+								<button id="bt_reset_data" title="Reset the datatable content">Reset</button>
+							</div>
+							<div class='tab_panel' style="height:135px;margin-top:15px;" title="Number of rows per page">
+								<p>The number of rows per page can be increased or decreased dynamically.</p>
+								<p>Just choose the number of your choice in the list below.</p>
+								<div style="float:left;">
+									<select id="cb_rows" name="cb_rows">
+										<option value="7">Default (7 rows)</option>
+										<option value="3">3 rows per page</option>
+										<option value="4">4 rows per page</option>
+										<option value="5">5 rows per page</option>
+										<option value="6">6 rows per page</option>
+									</select>
+								</div>
+								<div style="float:left;margin-left:5px;">
+									<button id="bt_apply_nbrows" title="Change the number of rows per page">Apply</button>
+								</div>
+							</div>
+						</div>
+						<div></div>
+						<div id="tab3">
+							<div class='tab_panel' title="Datatable load">
+								<p>Rows are dynamically loaded in the datatable each time a page is selected, without a browser page refresh.</p>
+								<p>This feature is available for the <a href="http://www.primefaces.org/primeui/datatable.html" target="_blank">puidatatable</a> component when the option <strong>lazy: true</strong> is activated.</p>
+								<p>Thus, an Ajax request of type <strong>GET</strong> can be sent to the web server to retrieve the rows for the page to display, thanks to the jQuery <strong>$.ajax()</strong> function call, made in the javascript method defined for the <strong>datasource</strong> datatable option.</p>
+								<p>The PHP script <q>get_data.php</q> called by the Ajax request, returns the rows in <strong>JSON</strong> format for the page to be displayed, including the total number of rows for evaluation of the total number of pages to display by the paginator.</p>
+								<p>Finally, the callback method of the <strong>datasource</strong> option is invoked with in parameter, the rows returned by the Ajax request, for loading the content of the datatable page.</p>
+							</div>
+						</div>
+						<div id="tab4">
+							<div class='tab_panel' title="Column sort">
+								<p>The datatable rows are sorted when the user click on a column title, if the sort functionality is enabled for the column.</p>
+								<p>The option <strong>sortable:true</strong> allows you to activate the sort feature for a column, within the datatable option <strong>columns</strong>.</p>
+								<p>When a column title is clicked on, the function defined for downloading the data rows within the option <strong>datasource</strong>,
+								is triggered with indication of the sort order and the name of the column which has been clicked on.
+								<br>These indications are then transmitted by an Ajax request to the server PHP script which in turn, sends back the ordered rows.</p>
+							</div>
+						</div>
+						<div id="tab5">
+							<div class='tab_panel' title="The paginator">
+								<p>The paginator is directly managed by the component <a href="http://www.primefaces.org/primeui/datatable.html" target="_blank">puidatatable</a>.</p>
+								<p>When the datatable is declared, the paginator characteristics are set thru the option <strong>paginator</strong> and its sub-options <strong>totalRecords</strong> (total number of rows for all pages),
+								<strong>rows</strong> (number of rows per page) and <strong>pageLinks</strong> (maximum number of page links displayed on the paginator).</p>
+								<p>The component <a href="http://www.primefaces.org/primeui/paginator.html" target="_blank">puipaginator</a> instanciated by the datatable is static once created.</p>
+								<p>To enhance the paginator so that its page links become dynamic when the total number of rows has changed, I added to the component for demo purposes, a new method <q><strong>Refresh</strong></q>, called each time that the rows of a page are loaded.</p>
+								<p>The next release of the PrimeUI components suite is supposed to include such a refresh function.</p>
+							</div>
+						</div>
+						<div id="tab6">
+							<div class='tab_panel' title="Form validation">
+								<p>The data typed in by the user in the edit form is validated by the web browser thanks to the new <strong>HTML5</strong> validation capabilities applied to the <strong>&lt;input/&gt;</strong> tag.</p>
+								<p>The attribute <strong>required</strong> is set to mandatory fields prefixed by a <span style="color:red;">*</span> character. So, the form is not submitted while the mandatory fields are not filled.</p>
+								<p>Concerning the field <q>Price</q>, a regular expression is defined using the attribute <strong>pattern</strong> to be sure a valid amount has been entered.</p>
+								<p>To trigger the HTML5 validation process, the save button must be declared within the form with the attribute <strong>type="submit"</strong>.
+								<br>In addition, the form submit event is intercepted in a jQuery event handler where an Ajax request is sent to the web server instead of the default form HTTP request.
+								<br> The HTTP default form request is blocked by a call to the jQuery function <strong>event.preventDefault()</strong>.</p>
+							</div>
+						</div>
+						<div id="tab7">
+							<div class='tab_panel' title="Search feature">
+								<p>The search feature consists in filtering the datatable content to the only rows which contain the text entered in the search field.</p>
+								<p>The component <a href="http://www.primefaces.org/primeui/datatable.html" target="_blank">puidatatable</a> has been overriden so that the new function named "filterRows",
+								especially developped for demo purposes, is called in response to the form event submit, with the searched text in parameter, to be finally transmitted to the datasource function,
+								in charge of requesting the corresponding rows to the web server.</p>
+								<p>The <strong>PrimeUI</strong> components are in the same time <strong>jQuery UI</strong> components and therefore can be easily enhanced by adding new methods or by overriding existing methods.</p>
+							</div>
+						</div>
+						<div></div>
+						<div id="tab8">
+							<div id="php_tabview">  
+								<ul>  
+									<li><a href="#tab81">get_data.php</a></li>  
+									<li><a href="#tab82">save_data.php</a></li>  
+									<li><a href="#tab83">remove_data.php</a></li>
+									<li><a href="#tab84">db_connect.php</a></li>
+								</ul>  
+								<div>  
+									<div id="tab81">  
+										<pre class="brush: php;">$first = isset($_GET['first']) ? intval($_GET['first']) : 0;
+$rows = isset($_GET['rows']) ? intval($_GET['rows']) : 10;
+$sort_field = isset($_GET['sortfield']) ? filter_var($_GET['sortfield'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH) : 'product_name';
+$sort_order = isset($_GET['sortorder']) ? intval($_GET['sortorder']) : 1;
+$criteria = isset($_GET['search_criteria']) ? filter_var($_GET['search_criteria'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH) : null;
+
+$filters = '';
+
+include 'db_connect.php';
+
+if (!empty($criteria)) {
+	$filters = " where upper(product_name) like upper('%$criteria%')"; 
+	$filters .= " or upper(product_description) like upper('%$criteria%')";
+	$filters .= " or upper(product_number) like upper('%$criteria%')";
+}
+
+$result["total"] = 0;
+$result["success"] = false;
+
+$query = "select count(*) from products" . $filters;
+$rs = mysql_query($query);
+if ($rs) {
+	$row = mysql_fetch_row($rs);
+	$result["total"] = $row[0];
+
+	$sort_field .= $sort_order === 1 ? ' asc' : ' desc';
+	$query = "select * from products" . $filters . " order by $sort_field limit $first,$rows";
+	$rs = mysql_query($query);
+	
+	if ($rs) {
+		$products = array();
+		while($row = mysql_fetch_object($rs)){
+			array_push($products, $row);
+		}
+		$result["rows"] = $products;
+		$result["success"] = true;
+		$result["msg"] = 'Products successfuly requested.';
+		if (!empty($criteria)) {
+			$result["msg"] .= " Filter '$criteria' applied.";
+		}
+	} else {
+		$result["msg"] = 'Sorry, unable to retrieve the rows from the database!';
+	}
+} else {
+	$result["msg"] = 'Sorry, unable to count the total number of rows!';
+}
+echo json_encode($result);</pre>
+									</div>
+									<div id="tab82">  
+										<pre class="brush: php;">$result = false;
+$product_id = intval($_REQUEST['product_id']);
+$part_number = filter_var($_REQUEST['part_number'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+$product_name = filter_var($_REQUEST['product_name'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+$product_description = filter_var($_REQUEST['product_description'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+$product_price = number_format(floatval($_REQUEST['product_price']), 2, '.', '');
+
+include 'db_connect.php';
+
+$action = $product_id === -1 ? 'new' : 'update';
+
+if ($action === 'new') {
+	$sql = "insert into products(part_number,product_name,product_description,product_price) values('$part_number','$product_name','$product_description','$product_price')";
+	$success_msg = 'Item added successfully.';
+	$error_msg = 'Sorry, some errors occured. Insert aborted!';
+} else {
+	$sql = "update products set part_number='$part_number',product_name='$product_name',product_description='$product_description',product_price='$product_price' where product_id=$product_id";
+	$success_msg = 'Item successfully updated.';
+	$error_msg = 'Sorry, some errors occured. Update aborted!';
+}
+
+$result = @mysql_query($sql);
+
+if ($result){
+	echo json_encode(array('action'=>$action,'success'=>true,'msg'=>$success_msg));
+} else {
+	echo json_encode(array('action'=>$action,'success'=>false,'msg'=>$error_msg));
+}</pre>
+									</div>
+									<div id="tab83">  
+										<pre class="brush: php;">$id = intval($_REQUEST['product_id']);
+
+include 'db_connect.php';
+
+$sql = "delete from products where product_id=$id";
+$result = @mysql_query($sql);
+if ($result){
+	echo json_encode(array('success'=>true,'msg'=>'Product removed successfully.'));
+} else {
+	echo json_encode(array('success'=>false,'msg'=>'Sorry, some errors occured!'));
+}</pre>
+									</div>
+									<div id="tab84">  
+										<pre class="brush: php;">$conn = @mysql_connect('127.0.0.1','db_user','db_pwd');
+if (!$conn) {
+	die('Could not connect: ' . mysql_error());
+}
+mysql_select_db('database_name', $conn);</pre>
+									</div>  
+								</div>  
+							</div>  
+						</div>
+					</div>  
+				</div>  	
+				<p>Data in the table is loaded dynamicaly by <strong>AJAX calls</strong> to the web server where the data requests are processed by <strong>PHP scripts</strong>.</p>
+			</div>
+		</div>
+		<div id="footer" class="ui-widget-header">
+			<div id="footer_left">Last update on 18th Juanary 2014<br />Technologies JQuery / PrimeUI / HTML5 / PHP</div>
+			<div id="footer_middle">Application developed for educational purposes only</div>
+			<div id="footer_right">Version beta 0.94<br />Realized by <a href="http://www.pm-consultant.fr/" target="_blank">Pascal MARTINEZ</a></div>
+		</div>
+		<!-- form dialog -->
+		<div id="edit_dialog" title="Product">
+			<form id="product_form">
+				<div class="form_entry">
+					<label class="required">Part number:</label>
+					<input name="part_number" maxlength="10" required>
+				</div>
+				<div class="form_entry">
+					<label class="required">Product name:</label>
+					<input name="product_name" maxlength="25" required>
+				</div>
+				<div class="form_entry">
+					<label class="textarea">Description:</label>
+					<textarea name="product_description" rows="3" maxlength="200"></textarea>
+				</div>
+				<div class="form_entry">
+					<label class="required">Price:</label>
+					<input name="product_price" placeholder="format 999.99" pattern="^\d+\.?\d{0,2}$" maxlength="6" required>
+				</div>
+				<input name="product_id" type="hidden" maxlength="4">
+				<div class="pui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<button id="bt_save" type="submit">Save</button>
+					<button id="bt_cancel" type="button">Cancel</button>
+				</div>
+			</form>
+		</div>
+		<!-- Remove confirmation dialog -->
+		<div id="remove_dialog" title="Remove product...">
+			<p>Do you really want to remove the selected product?</p>
+			<div class="pui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<button id="bt_remove_yes" type="button">Yes</button>
+				<button id="bt_remove_no" type="button">No</button>
+			</div>
+		</div>
+	</body>
+</html>

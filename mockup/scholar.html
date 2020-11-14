@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>SGL - Scholar view</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Merienda+One"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script id="appjs" type="text/javascript" src="src/scholar.js"></script>
+  </head>
+  <body>
+    <header>
+      <div id="mockup"><span>mockup</span></div>
+    </header>
+    <main>
+      <div
+        id="container"
+        style="
+          position: absolute;
+          width: 99%;
+          height: 99%;
+          background-color: whitesmoke;
+        "
+      >
+        <div
+          id="nav"
+          style="
+            min-height: 50px;
+            margin: 2px;
+            background-color: rgba(255, 255, 255, 1);
+            height: 5%;
+          "
+        >
+          <header>
+            <span class="main">Daniele Gambarara: SGL</span>
+            <br />
+            <span class="subtitle"
+              >Beyond the Course. A Knowledge Site for Rethinking Saussure’s
+              General Linguistics
+            </span>
+            <nav class="intestazione">
+              <ol>
+                <li><a href="index.html">home</a></li>
+                <li><a href="about.html">about</a></li>
+                <li><a href="about.html">corpora</a></li>
+                <li><a href="about.html">indexes</a></li>
+                <li><a href="about.html">views</a></li>
+              </ol>
+            </nav>
+
+            <div id="user-role">
+              <span>hi, your actual role is</span>
+              <select name="user-role" id="role">
+                <option value="reader">READER</option>
+                <option value="scholar" selected>SCHOLAR</option>
+              </select>
+            </div>
+          </header>
+        </div>
+        <div id="main" style="height: 85%;">
+          <div id="infobox">
+            <span id="close-btn" style="text-align: right; cursor: pointer;"
+              >[x]</span
+            >
+            <div class="infobox-content">
+              <header style="text-align: left;"></header>
+              <span></span>
+            </div>
+          </div>
+          <div
+            id="side-bar"
+            style="
+              float: left;
+              margin: 1px;
+              min-width: 150px;
+              width: 20%;
+              height: 100%;
+              background-color: white;
+              overflow-y: auto;
+              overflow-x: hidden;
+            "
+          >
+            <header
+              style="
+                margin-top: 5px;
+                padding-top: 5px;
+                text-align: center;
+                font-size: larger;
+                background-color: whitesmoke;
+              "
+            >
+              SIDE BAR:
+            </header>
+            <div id="evt-butt" class="button" style="text-align: center;">
+              <input
+                type="button"
+                value="view the source in evt software"
+                onclick="window.location.href='http://licodemo.ilc.cnr.it/demo/demo-saussure-build/#/imgTxt?d=fr.3955-1&p=page1&e=diplomatic&ce=interpretative'"
+              />
+            </div>
+
+            <div id="side-info" class="accordion">
+              <button id="abutt-info" class="accordion-trigger">
+                <span class="accordion-title">
+                  ENGLISH TRANSLATION
+                  <span
+                    id="acc-icon"
+                    class="accordion-icon"
+                    data-open="open"
+                  ></span
+                ></span>
+              </button>
+              <div id="info-list" style="display: block;">
+                <p
+                  style="
+                    text-align: center;
+                    padding: 2px 5px;
+                    border-bottom: 1px solid hsl(216, 100%, 11%);
+                  "
+                >
+                  <em>Interpretative Edition of the Source</em>
+                </p>
+                <p
+                  style="
+                    text-align: justify;
+                    padding: 2px 5px;
+                    border-bottom: 1px solid hsl(216, 100%, 11%);
+                  "
+                >
+                  Misc. What the chess comparison correctly reflects is the
+                  conventionality of the function (value) but, as far as
+                  structure is concerned, this comparison is unfounded, since
+                  individual pieces cannot be taken apart, and do not, unlike
+                  the word unit, contain different parts, with different
+                  functions.
+                </p>
+              </div>
+            </div>
+
+            <div id="side-other" class="accordion">
+              <button id="abutt-other" class="accordion-trigger">
+                <span class="accordion-title"
+                  >LEXICAL INFO
+                  <span
+                    id="acc-icon"
+                    class="accordion-icon"
+                    data-open="open"
+                  ></span
+                ></span>
+              </button>
+              <div id="others" style="display: block;">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)" onclick="showinfobox('LANGUE')"
+                      >LANGUE</a
+                    >
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)" onclick="showinfobox('LANGUE')"
+                      >INTERNE</a
+                    >
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)" onclick="showinfobox('LANGUE')"
+                      >PANCHRONIQUE</a
+                    >
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)" onclick="showinfobox('LANGUE')"
+                      >VALEUR</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            id="app"
+            style="
+              float: left;
+              margin-left: 5px;
+              margin-top: 2px;
+              margin-bottom: 2px;
+              width: 79%;
+              height: 99%;
+              background-color: rgba(194, 194, 194, 0.4);
+            "
+          >
+            <div style="text-align: center;">
+              <h1 class="htitle">Explore Saussure Thoughts</h1>
+            </div>
+            <div class="err-msg" id="error">
+              <div
+                id="error-close"
+                style="float: left; font-size: x-small; cursor: pointer;"
+              >
+                [x]
+              </div>
+              <div id="warning-msg">
+                The selected feature is under development
+              </div>
+            </div>
+            <div class="alert-msg" id="message">
+              <div
+                id="msg-close"
+                style="float: left; font-size: x-small; cursor: pointer;"
+              >
+                [x]
+              </div>
+              <div id="attention-msg" style="margin-left: 25%;">
+                Dive into <b>échec</b> from
+              </div>
+            </div>
+            <div
+              id="source"
+              style="margin-top: 5%; width: 100%; text-align: center;"
+            >
+              <div>Facsimile</div>
+              <div>Diplomatic</div>
+              <div>
+                Interpretative <br />(<em>Quelques vérités, p. 123</em>)
+              </div>
+              <div
+                id="facs"
+                onclick="window.location.href='imgs/ms_fr_03951_15_f016v.jpg'"
+              ></div>
+              <div id="dipl"></div>
+              <div id="tran"></div>
+            </div>
+            <div id="timeline"></div>
+            <div
+              id="search-result"
+              style="
+                margin-top: 20px;
+                width: 95%;
+                height: 65%;
+                overflow-y: auto;
+              "
+            ></div>
+          </div>
+        </div>
+        <div
+          id="footer"
+          style="margin: 2px; background-color: white; height: 9%;"
+        >
+          <footer style="text-align: center;">
+            <div style="padding-top: 10px;">
+              <span style="margin-left: 1%;"> ERC-2020- ADV Grant </span>
+              <span style="margin-left: 50%;"> SGL project</span>
+            </div>
+            <div style="margin-top: 5px;">
+              <span>
+                © 2020 Beyond the Course. A Knowledge Site for Rethinking
+                Saussure’s General Linguistics
+              </span>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      var accordition = (e) => {
+        console.log("accordition", e);
+        var acc = e.srcElement.nextElementSibling; //document.getElementById("info-list");
+        var accIcon = e.srcElement.querySelector(".accordion-icon");
+        acc.style.display == "none"
+          ? (acc.style.display = "block")
+          : (acc.style.display = "none");
+        accIcon.dataset.open == "close"
+          ? (accIcon.dataset.open = "open")
+          : (accIcon.dataset.open = "close");
+      };
+      let test = () => {
+        console.log(scholar.data.sources[0].source);
+        let msg = document.querySelector("#attention-msg");
+        //console.log("msg", msg);
+        msg.innerHTML += scholar.data.sources[0].source;
+        scholar.fillSource();
+      };
+
+      var warning = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The selected feature is under development`;
+      };
+
+      var warning_role = (e) => {
+        console.log("warning", e);
+        let errEle = document.querySelector("#error");
+        errEle.style.display = "block";
+        var msg = document.getElementById("warning-msg");
+        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
+
+        window.location.href = "https://hp028.csb.app/testi.html?rif=f16v";
+      };
+      var showinfobox = (n) => {
+        console.log("in html show info box", n);
+        scholar.showinfobox(n);
+      };
+      var closeinfobox = () => {
+        var infobox = document.getElementById("infobox");
+        infobox.style.display = "none";
+      };
+      var simtext = (e) => {
+        warning(e);
+      };
+      var close = (e) => {
+        console.log("close", e.target.parentNode);
+        e.target.parentNode.style.display = "none";
+      };
+      window.addEventListener("load", () => {
+        document
+          .getElementById("abutt-info")
+          .addEventListener("click", accordition);
+        document
+          .getElementById("abutt-other")
+          .addEventListener("click", accordition);
+        document
+          .getElementById("role")
+          .addEventListener("change", warning_role);
+        document
+          .getElementById("close-btn")
+          .addEventListener("click", closeinfobox);
+        document.getElementById("error-close").addEventListener("click", close);
+        document.getElementById("msg-close").addEventListener("click", close);
+
+        setTimeout(test, 1500);
+      });
+    </script>
+  </body>
+</html>

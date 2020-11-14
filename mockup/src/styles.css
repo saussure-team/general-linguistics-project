@@ -1,0 +1,373 @@
+body {
+  font-family: sans-serif;
+}
+
+li {
+  margin: 20px 0;
+}
+
+.result-item {
+  font-family: "Courier New", Courier, monospace;
+  width: 600px;
+  height: 18px;
+  overflow: hidden;
+  margin-left: 20px;
+  margin-bottom: 4px;
+  border: 2px solid rgb(109, 109, 109);
+  background-color: white;
+  float: left;
+  /*width: 50%;
+  overflow: scroll;*/
+  clear: right;
+}
+
+.infobox-content {
+  text-align: justify;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.result-item > a {
+  padding: 10px;
+}
+
+.intestazione li {
+  list-style-type: none;
+  display: inline;
+  padding-left: 20px;
+}
+
+.intestazione li a {
+  font-size: larger;
+  padding: 10px;
+  background-color: whitesmoke;
+}
+
+nav {
+  float: none;
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  transform: translate(-35%, 0%);
+  display: inline;
+}
+
+ol {
+  padding: 0px;
+  margin: 0px;
+  margin-top: 5px;
+  display: inline-block;
+}
+
+header {
+  position: relative;
+  text-align: cernter;
+}
+
+header > span {
+  font: italic 1.2em/1 "Merienda One", Helvetica, sans-serif;
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 3px 3px 3px #fff;
+}
+
+#user-role {
+  float: right;
+  margin-right: 35px;
+  margin-top: 1px;
+}
+#fonti-lista li input {
+  margin-right: 15px;
+  float: left;
+}
+
+.luoghi {
+  float: left;
+  clear: left;
+  margin-left: 50px;
+  margin-bottom: 4px;
+  padding-left: 5px;
+  width: 235px;
+  border: 2px solid rgb(109, 109, 109);
+  background-color: white;
+  font-weight: bold;
+}
+
+#search-result {
+  overflow: hidden;
+  /*background-color: green;*/
+}
+
+#app {
+  overflow: hidden;
+}
+
+.res-it {
+  background-color: red;
+}
+
+#reset {
+  clear: left;
+  float: left;
+  position: relative;
+  left: 800px;
+  margin-top: 10px;
+}
+
+.text-item {
+  font-family: "Courier New", Courier, monospace;
+  width: 80%;
+  height: auto;
+  overflow: hidden;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 4px;
+  border: 2px solid rgb(109, 109, 109);
+  background-color: white;
+  padding: 10px;
+  /*float: left;*/
+  /*width: 50%;
+  overflow: scroll;*/
+  /*clear: right;*/
+}
+
+.references li,
+.other-info li {
+  list-style-type: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-justify: inter-word;
+  text-align: justify;
+}
+
+#info-about li {
+  text-align: left;
+}
+
+.subtitle {
+  font-size: x-small;
+}
+
+#mockup {
+  color: white;
+  background-color: red;
+}
+
+#p-title {
+  text-align: center;
+  font-weight: bold;
+}
+#cp-title {
+  font-weight: bold;
+  text-align: center;
+  font-variant: small-caps;
+}
+
+.accordion {
+  margin-top: 5px;
+  margin-right: 3px;
+  margin-left: 3px;
+  margin-bottom: 5px;
+  border: 0px solid hsl(216, 94%, 73%);
+}
+#dates {
+  border: 1px solid hsl(216, 94%, 73%);
+}
+.accordion-trigger {
+  background: none;
+  color: hsl(0, 0%, 13%);
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  padding: 1em 1.5em;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  outline: none;
+}
+
+button {
+  border-style: none;
+}
+.accordion-title {
+  display: block;
+  pointer-events: none;
+  border: transparent 2px solid;
+  border-radius: 5px;
+  padding: 0.25em;
+  outline: none;
+  border-color: hsl(216, 94%, 73%);
+}
+
+.accordion-trigger:focus .accordion-title {
+  border-color: hsl(216, 94%, 73%);
+}
+.accordion-icon {
+  border: solid hsl(0, 0%, 62%);
+  border-width: 0 2px 2px 0;
+  height: 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  right: 3em;
+  top: 50%;
+  transform: translateY(-60%) rotate(45deg);
+  width: 0.5rem;
+}
+
+.accordion-icon[data-open="open"] {
+  border: solid hsl(0, 0%, 62%);
+  border-width: 0 2px 2px 0;
+  height: 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  right: 3em;
+  top: 50%;
+  transform: translateY(-60%) rotate(225deg);
+  width: 0.5rem;
+}
+
+.accordion-trigger:focus .accordion-icon,
+.accordion-trigger:hover .accordion-icon {
+  border-color: hsl(216, 94%, 73%);
+}
+
+.accordion-trigger:focus,
+.accordion-trigger:hover {
+  background: hsl(216, 94%, 94%);
+}
+
+#dates ul {
+  list-style: none;
+}
+
+.err-msg {
+  margin-top: 1%;
+  width: 55%;
+  margin-left: 23%;
+  border: 2px double red;
+  background-color: rgb(250, 171, 171);
+  display: none;
+  text-align: center;
+}
+
+.alert-msg {
+  margin-top: 1%;
+  width: 55%;
+  margin-left: 23%;
+  border: 2px double whitesmoke;
+  background-color: hsl(216, 94%, 94%);
+  /* hsl(216, 94%, 94%)*/
+  /* rgb(219, 229, 157); */
+  /* rgb(252, 230, 230);*/
+}
+
+#choose-language {
+  position: absolute;
+  margin-top: 1%;
+  left: 65%;
+  top: 1%;
+  /*transform: translateX(50%);*/
+}
+
+#corpus-tabs ul {
+  list-style: none;
+}
+
+#corpus-tabs li {
+  display: inline;
+  margin-left: 1px;
+  background-color: whitesmoke;
+  padding: 0px 10px;
+}
+
+#corpus-tabs li.active {
+  background-color: whitesmoke;
+  border-style: outset;
+}
+
+#corpus-tabs li.deactive {
+  background-color: whitesmoke;
+  border-style: groove;
+  color: gray;
+}
+
+#corpus-tabs i {
+  font-size: x-small;
+}
+
+.htitle {
+  font: italic 1.2em/2 "Merienda One", Helvetica, sans-serif;
+}
+
+.top {
+  margin-top: 10px;
+  background-color: whitesmoke;
+}
+
+.term {
+  background-color: hsl(216, 94%, 94%);
+}
+
+#infobox {
+  display: none;
+  text-align: right;
+  position: absolute;
+  background-color: rgba(0, 36, 51, 0.74);
+  border: 1px groove gray;
+  color: whitesmoke;
+  /*min-width: 100px;*/
+  /*max-width: 250px;*/
+  min-height: 300px;
+  width: 50%;
+  height: 50%;
+  z-index: 999;
+  top: 20%;
+  left: 35%;
+}
+
+.infobox-content {
+  padding: 3%;
+}
+
+#source {
+  max-width: 95%;
+  margin-left: 2%;
+  display: grid;
+  grid-template-columns: 1.5fr 1.3fr 0.8fr;
+  grid-gap: 2px;
+}
+
+#facs {
+  border: 0px outset black;
+  grid-column: 1;
+}
+
+#facs > img {
+  width: 90%;
+}
+
+#dipl {
+  padding-top: 5%;
+  padding-left: 2px;
+  border: 0px outset black;
+  grid-column: 2;
+  text-align: left;
+  line-height: 3ex;
+  font-style: oblique;
+}
+
+#tran {
+  padding-top: 5%;
+  padding-left: 7px;
+  border-left: 1px outset black;
+  grid-column: 3;
+  text-align: justify;
+}
+
+.line {
+  background-color: burlywood;
+  font-style: normal;
+}
