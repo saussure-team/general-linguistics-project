@@ -113,6 +113,7 @@
                 type="checkbox"
                 name="check-attempts"
                 id="check-attempts"
+                checked
               />
               <a style="text-decoration: none;" href="#tab1">
                 <div>
@@ -125,6 +126,7 @@
                 type="checkbox"
                 name="check-lectures"
                 id="check-lectures"
+                checked
               /><a style="text-decoration: none;" href="#tab3"
                 >Lectures (1906-1911)</a
               >
@@ -395,7 +397,8 @@
         let errEle = document.querySelector("#error");
         errEle.style.display = "block";
         var msg = document.getElementById("warning-msg");
-        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
+        msg.innerHTML = `The scholar view is available only for the sources: <b>BGE MS fr. 3951/15 f. 16v</b>;  <b>BGE AdS 372/4, f. 135</b>; and <b>BGE MS fr. 3951/12 f. 1v</b>
+ (Attempts to write a book corpus)`;
       };
 
       window.addEventListener("load", (event) => {

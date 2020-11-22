@@ -23,6 +23,7 @@ li {
 
 .infobox-content {
   text-align: justify;
+  padding: 3%;
 }
 
 a {
@@ -138,8 +139,9 @@ header > span {
   list-style-type: none;
   padding-left: 10px;
   padding-right: 10px;
-  text-justify: inter-word;
   text-align: justify;
+  text-justify: inter-word;
+  font-size: smaller;
 }
 
 #info-about li {
@@ -328,25 +330,28 @@ button {
   left: 35%;
 }
 
-.infobox-content {
-  padding: 3%;
-}
-
 #source {
-  max-width: 95%;
-  margin-left: 2%;
+  max-width: 97%;
+  margin-left: 5px;
+  margin-top: 10px;
   display: grid;
-  grid-template-columns: 1.5fr 1.3fr 0.8fr;
-  grid-gap: 2px;
+  grid-template-columns: 0.9fr 1.3fr 0.8fr;
+  grid-gap: 5px;
 }
 
 #facs {
   border: 0px outset black;
   grid-column: 1;
+  /*max-height: 99%;*/
 }
 
 #facs > img {
-  width: 90%;
+  width: 99%;
+  /*max-height: 99%;*/
+}
+
+#facs > img:hover {
+  cursor: help;
 }
 
 #dipl {
@@ -370,4 +375,50 @@ button {
 .line {
   background-color: burlywood;
   font-style: normal;
+}
+
+ins {
+  text-decoration-line: none;
+}
+
+ins::before {
+  content: "<";
+}
+
+ins::after {
+  content: ">";
+}
+
+#simbox {
+  display: none;
+  text-align: right;
+  position: absolute;
+  background-color: rgba(0, 36, 51, 0.74);
+  border: 1px groove gray;
+  color: whitesmoke;
+  /*min-width: 100px;*/
+  /*max-width: 250px;*/
+  min-height: 300px;
+  width: 50%;
+  height: 50%;
+  z-index: 999;
+  top: 20%;
+  left: 35%;
+}
+
+.simbox-content {
+  text-align: left;
+  padding: 3%;
+}
+
+.header-box {
+  text-align: center;
+  font-variant: small-caps;
+  padding-bottom: 10px;
+}
+
+#simbox a {
+  color: whitesmoke;
+  font-style: italic;
+  font-weight: bold;
 }

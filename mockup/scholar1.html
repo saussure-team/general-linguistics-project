@@ -146,12 +146,12 @@
                     border-bottom: 1px solid hsl(216, 100%, 11%);
                   "
                 >
-                  Misc. What the chess comparison correctly reflects is the
-                  conventionality of the function (value) but, as far as
-                  structure is concerned, this comparison is unfounded, since
-                  individual pieces cannot be taken apart, and do not, unlike
-                  the word unit, contain different parts, with different
-                  functions.
+                  Just as in chess it would be absurd to ask what a queen, a
+                  pawn, a bishop or a knight would be, if considered outside the
+                  game of chess, so there is no sense, if language is really
+                  what is being considered, in seeking what each element is in
+                  itself. It is nothing other than a piece whose value depends
+                  on its opposition to others within certain conventions.
                 </p>
               </div>
             </div>
@@ -231,15 +231,14 @@
               </div>
             </div>
             <div id="source" style="text-align: center;">
-              <div>Facsimile<br />(<em>BGE Ms. fr. 3951/15 f. 16v </em>)</div>
-              <div>Diplomatic<br />(<em>BGE Ms. fr. 3951/15 f. 16v </em>)</div>
+              <div>Facsimile <br />(<em>BGE AdS 372/4 f. 135</em>)</div>
+              <div>Diplomatic <br />(<em>BGE AdS 372/4 f. 135</em>)</div>
               <div>
-                Interpretative <br />(<em>Quelques vérités, p. 123</em>)
+                Interpretative <br />(<em>Science du langage, p. 231</em>)
               </div>
-
               <div
                 id="facs"
-                onclick="window.location.href='imgs/ms_fr_03951_15_f016v.jpg'"
+                onclick="window.location.href='imgs/arch_saussure_372_04_f135.jpg'"
               ></div>
               <div id="dipl"></div>
               <div id="tran"></div>
@@ -289,11 +288,11 @@
           : (accIcon.dataset.open = "close");
       };
       let test = () => {
-        console.log(scholar.data.sources[0].source);
+        console.log(scholar.data.sources[1].source);
         let msg = document.querySelector("#attention-msg");
         //console.log("msg", msg);
-        msg.innerHTML += scholar.data.sources[0].source;
-        scholar.fillSource(0);
+        msg.innerHTML += scholar.data.sources[1].source;
+        scholar.fillSource(1);
         document
           .getElementById("sim-close-btn")
           .addEventListener("click", closesimbox);
@@ -319,9 +318,9 @@
         let errEle = document.querySelector("#error");
         errEle.style.display = "block";
         var msg = document.getElementById("warning-msg");
-        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
+        msg.innerHTML = `The scholar view is available for the BGE AdS 372/4, f. 135 (Attempts sources)`;
 
-        window.location.href = "https://hp028.csb.app/testi.html?rif=f16v";
+        window.location.href = "https://hp028.csb.app/testi.html?rif=ff135";
       };
       var showinfobox = (n) => {
         console.log("in html show info box", n);
@@ -331,12 +330,14 @@
         var infobox = document.getElementById("infobox");
         infobox.style.display = "none";
       };
+
       var simtext = (e) => {
         //warning(e);
-        let text = "f16v";
+        let text = "ff135";
         console.log(app.texts[text][0].themes);
         app.showSimilarTexts(app.texts[text][0].themes, text);
       };
+
       var close = (e) => {
         console.log("close", e.target.parentNode);
         e.target.parentNode.style.display = "none";

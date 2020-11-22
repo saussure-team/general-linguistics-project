@@ -67,7 +67,26 @@
             >[x]</span
           >
           <div class="infobox-content">
-            <header style="text-align: left;"></header>
+            <header
+              style="
+                text-align: center;
+                font-variant: small-caps;
+                padding-bottom: 10px;
+              "
+            >
+              Lexicon
+            </header>
+            <span></span>
+          </div>
+        </div>
+        <div id="simbox">
+          <span id="sim-close-btn" style="text-align: right; cursor: pointer;"
+            >[x]</span
+          >
+          <div class="simbox-content">
+            <header class="header-box">
+              Similar Texts
+            </header>
             <span></span>
           </div>
         </div>
@@ -276,6 +295,12 @@
         var infobox = document.getElementById("infobox");
         infobox.style.display = "none";
       };
+      var closesimbox = () => {
+        var simbox = document.getElementById("simbox");
+        simbox.children[1].innerHTML =
+          "<header class='header-box'>Similar Texts</header><span></span>";
+        simbox.style.display = "none";
+      };
 
       var reset = () => {
         var result = document.getElementById("text-result");
@@ -292,15 +317,21 @@
 
       var warning_role = (e) => {
         console.log("warning", e);
-        let errEle = document.querySelector("#error");
-        errEle.style.display = "block";
-        var msg = document.getElementById("warning-msg");
-        msg.innerHTML = `The scholar view is available for the BGE MS fr. 3951/15 f. 16v (Attempts sources)`;
         var params = new URLSearchParams(document.location.search);
         console.log("param", params.get("rif"));
         param = params.get("rif");
         if (param == "f16v") {
           window.location.href = "https://hp028.csb.app/scholar.html";
+        } else if (param == "ff135") {
+          window.location.href = "https://hp028.csb.app/scholar1.html";
+        } else if (param == "f1v") {
+          window.location.href = "https://hp028.csb.app/scholar2.html";
+        } else {
+          let errEle = document.querySelector("#error");
+          errEle.style.display = "block";
+          var msg = document.getElementById("warning-msg");
+          msg.innerHTML = `The scholar view is available only for the sources: <b>BGE MS fr. 3951/15 f. 16v</b>;  <b>BGE AdS 372/4, f. 135</b>; and <b>BGE MS fr. 3951/12 f. 1v</b>
+      (Attempts to write a book corpus)`;
         }
       };
 
@@ -316,7 +347,12 @@
       };
 
       var simtext = (e) => {
-        warning(e);
+        //warning(e);
+        var params = new URLSearchParams(document.location.search);
+        console.log("param", params.get("rif"));
+        let text = params.get("rif");
+        console.log(app.texts[text][0].themes);
+        app.showSimilarTexts(app.texts[text][0].themes, text);
       };
 
       window.addEventListener("load", (event) => {
@@ -329,6 +365,10 @@
         document
           .getElementById("close-btn")
           .addEventListener("click", closeinfobox);
+        document
+          .getElementById("sim-close-btn")
+          .addEventListener("click", closesimbox);
+
         document
           .getElementById("role")
           .addEventListener("change", warning_role);
